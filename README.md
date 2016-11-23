@@ -10,6 +10,43 @@ This project aims to provide a unified view on open government data provided by 
 
 Documentation to follow...
 
+```
+
+// With address
+
+api.au/data/address/511+Church+St%2C+Richmond%2C+VIC+3121/garbage-collection-zones
+
+[{
+  rub_day: monday,
+  ...
+}, {
+  ...
+}]
+
+api.au/data/address/511+Church+St%2C+Richmond%2C+VIC+3121/dog-walking-zones
+
+[{
+  status: offleash,
+  ...
+}, {
+  ...
+}]
+
+api.au/data/address/511+Church+St%2C+Richmond%2C+VIC+3121
+
+{
+  garbage-collection-zones: [{...}, {...}],
+  dog-walking-zones: [{...}, {...}]
+}
+
+// Alternative with point
+
+api.au/data/point/-37.828392885/144.997581858333/garbage-collection-zones
+api.au/data/point/-37.828392885/144.997581858333/dog-walking-zones
+api.au/data/point/-37.828392885/144.997581858333
+
+```
+
 ## Deploy
 
 This project runs on AWS.
