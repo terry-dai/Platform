@@ -2,7 +2,17 @@
 
 **Work in Progress**
 
-## Project Structure
+Provide a unified view on open council data of Australian government.
+
+This project aims to provide a unified view on open government data provided by the Australian government. It reads data from various sources and hosts them in a unified format off a single API endpoint.
+
+## API
+
+Documentation to follow...
+
+## Deploy
+
+This project runs on AWS.
 
 ### Infrastructure
 
@@ -24,3 +34,7 @@
 - Geometry: PostGIS-format geometry data
 - Date: Date Last Updated (in order to perform "updateded since" queries)
 - Payload: Data in Open Council Data Standard Format
+
+## License
+
+Read [LICENSE](LICENSE) file
