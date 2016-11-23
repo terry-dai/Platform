@@ -1,4 +1,4 @@
-const gov = require('../data-dot-gov')
+const gov = require('../../clients/data-dot-gov')
 
 const keywords = ['walk', 'zones', 'off leash']
 
