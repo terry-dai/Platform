@@ -19,6 +19,7 @@ This project runs on AWS.
 - Ingestor EC2 Instance
 - API EC2 Instance
 - PostgreSQL Database with GIS extension
+ - `psql --host=db-open-council-data-platform.cjcfydfeltyw.ap-southeast-2.rds.amazonaws.com --username=master  --dbname=db_open_council_data`
 
 ### Folder Structure
 
