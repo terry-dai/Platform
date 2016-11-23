@@ -1,13 +1,14 @@
 {
-  "name": "open-council-data-etl",
+  "name": "open-council-data-ingestors",
   "version": "0.0.1",
-  "description": "ETL (Extract-Transform-Load) workers for OpenCouncilData",
+  "description": "Ingestors for OpenCouncilData",
   "main": "index.js",
   "dependencies": {
     "ckan": "^0.2.3"
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +20,5 @@
   "bugs": {
     "url": "https://github.com/OpenCouncilData/Platform/issues"
   },
-  "homepage": "https://github.com/OpenCouncilData/Platform#readme"
+  "homepage": "https://github.com/OpenCouncilData/Platform"
 }
