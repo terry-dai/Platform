@@ -6,7 +6,7 @@ exports.searchPackagesByTags = function searchPackagesByTags(tags) {
 
     const filterQuery = tags.join(' AND ')
 
-    client.action('package_search', { fq: `tags:(dog)` }, function(err, body) {
+    client.action('package_search', { fq: `tags:(${filterQuery})` }, function(err, body) {
       if(err) {
         reject(err)
       } else {
