@@ -1,5 +1,32 @@
 'use strict';
 
+/*
+
+  # Sample Usage:
+
+  const ioGeocoding = require('ioGeocoding');
+  ioGeocoding
+    .then(result => console.log(result))
+    .catch(error => console.error(error));
+
+
+  # Result Format Sample:
+
+  {
+    latitude: -37.828392885,
+    longitude: 144.997581858333,
+    country: 'Australia',
+    city: undefined,
+    state: 'Victoria',
+    zipcode: '3131',
+    streetName: 'Church Street',
+    streetNumber: '511',
+    countryCode: 'AU',
+    provider: 'openstreetmap'
+  }
+
+*/
+
 const nodeGeocoder = require('node-geocoder');
 const options = {
   provider: 'openstreetmap'
@@ -32,15 +59,3 @@ const main = input => {
 }
 
 module.exports = main;
-
-// DEBUG
-[
-  '511+Church+St%2C+Richmond%2C+VIC+3121',
-  '1%2F511+Church+St%2C+Richmond%2C+VIC+3121'
-]
-  .map(main)
-  .forEach(promise => {
-    promise
-      .then(console.log)
-      .catch(console.error);
-  });
