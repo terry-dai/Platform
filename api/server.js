@@ -1,6 +1,8 @@
 var restify = require('restify');
 var pg = require('pg');
 
+const io25Geocoding = require('./io25Geocoding.js');
+
 // create a config to configure both pooling behavior
 // and client options
 // note: all config is optional and the environment variables
@@ -37,27 +39,34 @@ server.get('/data/address/:address/:zone', function respond(req, res, next) {
 });
 
 server.get({
-    name: 'garbage-collection-zones',
-    path: '/data/address/:address/:zone'
+  name: 'garbage-collection-zones',
+  path: '/data/address/:address/:zone'
 }, function (req, res, next) {
-    console.log('garbage-collection-zones');
-    getGarbageCollectionZones(req.params.address, res, next);
+  console.log('garbage-collection-zones');
+  getGarbageCollectionZones(req.params.address, res, next);
 });
 
 server.get({
-    name: 'dog-walking-zones',
-    path: '/data/address/:address/:zone'
+  name: 'dog-walking-zones',
+  path: '/data/address/:address/:zone'
 }, function (req, res, next) {
-    console.log('dog-walking-zones');
-    getDogWalkingZones(req.params.address, res, next);
+  console.log('dog-walking-zones');
+  getDogWalkingZones(req.params.address, res, next);
 });
 
 server.get({
-    name: 'all-zones',
-    path: '/data/address/:address/:zone'
+  name: 'all-zones',
+  path: '/data/address/:address/:zone'
 }, function (req, res, next) {
-    console.log('all-zones');
-    getAllZones(req.params.address, res, next);
+  console.log('all-zones');
+  getAllZones(req.params.address, res, next);
+});
+
+server.get('/data/point/:lat/:long/garbage-collection-zones', function respond(req, res, next) {
+  // var type = 'garbage-collection-zones'
+  var type = 'test';
+  var point = req.params.lat + ", " + req.params.long;
+  queryPG(type, point, res, next);
 });
 
 server.listen(8080, function() {
@@ -109,9 +118,14 @@ function queryPG(type, point, res, next) {
 
 function getGarbageCollectionZones(address, res, next) {
   console.log(address);
-  var point = '-37.94474, 145.22076';
-  var type = 'garbage-collection-zones'
-  queryPG(type, point, res, next);
+
+  io25Geocoding(address)
+      .then(result => {
+        var point = result.latitude + ', ' + result.longitude;
+        var type = 'garbage-collection-zones';
+        queryPG(type, point, res, next);
+      })
+      .catch(error => console.error(error));
 }
 
 function getDogWalkingZones(address, res, next) {

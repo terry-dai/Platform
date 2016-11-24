@@ -5,7 +5,7 @@
   # Sample Usage:
 
   const io25Geocoding = require('io25Geocoding');
-  io25Geocoding
+  io25Geocoding('511+Church+St%2C+Richmond%2C+VIC+3121')
     .then(result => console.log(result))
     .catch(error => console.error(error));
 

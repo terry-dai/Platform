@@ -19,6 +19,7 @@
   "homepage": "https://github.com/OpenCouncilData/Platform#readme",
   "dependencies": {
     "pg": "^6.1.0",
-    "restify": "^4.3.0"
+    "restify": "^4.3.0",
+    "node-geocoder": "^3.15.1"
   }
 }
