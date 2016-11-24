@@ -1,0 +1,10 @@
+div[role="main"] {
+  padding-left: 10%;
+  width: 80%;
+}
+
+#result-text {
+  height: 30rem;
+  resize: none;
+  width: 100%;
+}
