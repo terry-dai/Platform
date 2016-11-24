@@ -64,9 +64,9 @@ server.get({
 
 server.get('/data/point/:lat/:long/garbage-collection-zones', function respond(req, res, next) {
   // var type = 'garbage-collection-zones'
-  var type = 'test';
-  var point = req.params.lat + ", " + req.params.long;
-  queryPG(type, point, res, next);
+  var type = 'test-bins';
+  var point = req.params.long + ", " + req.params.lat;
+  queryPGContains(type, point, res, next);
 });
 
 server.listen(8080, function() {
@@ -116,14 +116,48 @@ function queryPG(type, point, res, next) {
   pool.on('error', handlePGError);
 }
 
+function queryPGContains(type, point, res, next) {
+  // to run a query we can acquire a client from the pool,
+  // run a query on the client, and then return the client to the pool
+  pool.connect(function(err, client, done) {
+    if(err) {
+      return console.error('error fetching client from pool', err);
+    }
+
+    var sql = 'select * from data';
+    if(type)
+      sql = sql + ` where type='${type}'`;
+    sql = sql + ' and ST_Contains(ST_SetSRID(geometry, 28355),'
+              + ` ST_Transform(ST_SetSRID(ST_MakePoint(${point}),4326),28355))`
+              + ' limit 5;'
+    console.log('sql query: ' + sql);
+
+    client.query(sql, function(err, result) {
+      //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      console.log('query returns row count: ' + result.rows.length);
+
+      res.send(result.rows);
+      next();
+    });
+  });
+
+  pool.on('error', handlePGError);
+}
+
 function getGarbageCollectionZones(address, res, next) {
   console.log(address);
 
   io25Geocoding(address)
       .then(result => {
-        var point = result.latitude + ', ' + result.longitude;
-        var type = 'garbage-collection-zones';
-        queryPG(type, point, res, next);
+        console.log(result);
+        var point = result.longitude + ', ' + result.latitude;
+        var type = 'test-bins';
+        queryPGContains(type, point, res, next);
       })
       .catch(error => console.error(error));
 }
