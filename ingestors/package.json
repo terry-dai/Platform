@@ -4,7 +4,10 @@
   "description": "Ingestors for OpenCouncilData",
   "main": "index.js",
   "dependencies": {
-    "ckan": "^0.2.3"
+    "ckan": "^0.2.3",
+    "pg": "^6.1.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
   },
   "devDependencies": {
     "chai": "*",

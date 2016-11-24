@@ -1,4 +1,5 @@
 const gov = require('../../clients/data-dot-gov')
+const request = require('request-promise')
 
 const keywords = ['walk', 'zones', 'off leash']
 
@@ -34,19 +35,32 @@ function isUsefulPackage(pkg) {
   )
 }
 
-function acquireResource(pkg, resource) {
-  console.log(`Aquired "${resource.name}" for "${pkg.title}"`)
+function logAcquiredResources(pairs) {
+  pairs.forEach(pair => {
+    console.log(`Aquired "${pair.resource.name}" for "${pair.package.title}"`)
+  })
+  return pairs;
 }
 
-gov.searchPackagesByTags(['dog'])
-  .then(pkgs => pkgs.filter(pkg => isUsefulPackage(pkg)))
-  .then(pkgs => pkgs
-    .map(pkg => ({ package: pkg, resource: selectResourceForPackage(pkg) }))
-    .filter(pair => !!pair.resource))
-  .then(pairs => {
-    pairs.forEach(pair => {
-      acquireResource(pair.package, pair.resource)
-    })
-  }).catch(error => {
-    console.log(error)
-  })
+function getGeoJson(pair) {
+  return request({ uri: pair.resource.url, json: true }).then(geoJson => ({
+    package: pair.package,
+    resource: pair.resource,
+    geoJson: geoJson
+  }))
+}
+
+/*
+ * Returns a promise of a list of { package, resource, geoJson }
+ */
+function scrape() {
+  return gov.searchPackagesByTags(['dog'])
+    .then(pkgs => pkgs.filter(pkg => isUsefulPackage(pkg)))
+    .then(pkgs => pkgs
+      .map(pkg => ({ package: pkg, resource: selectResourceForPackage(pkg) }))
+      .filter(pair => !!pair.resource)
+      .map(pair => getGeoJson(pair)))
+    .then(promises => Promise.all(promises))
+}
+
+exports.scrape = scrape
