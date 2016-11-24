@@ -1,0 +1,21 @@
+{
+  "name": "geocoding",
+  "description": "geocoding tests",
+  "main": "index.js",
+  "authors": [
+    "David Christ <david.christ@rea-group.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/OpenCouncilData/Platform",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "rui-auto-complete": "git.realestate.com.au:rui/rui-auto-complete.git#^3.0.3",
+    "rui-forms": "git.realestate.com.au:rui/rui-forms.git#^1.1.1"
+  }
+}
