@@ -1,16 +1,10 @@
 'use strict';
 
-const NodeGeocoder = require('node-geocoder');
+const nodeGeocoder = require('node-geocoder');
 const options = {
   provider: 'openstreetmap'
 };
-const geocoder = NodeGeocoder(options);
-
-
-const inputs = [
-  '511+Church+St%2C+Richmond%2C+VIC+3121',
-  '1%2F511+Church+St%2C+Richmond%2C+VIC+3121'
-];
+const geocoder = nodeGeocoder(options);
 
 const cleanAddress = input => {
   let address = input;
@@ -32,48 +26,21 @@ const cleanAddress = input => {
   return address;
 };
 
-inputs.forEach(input => {
+const main = input => {
   const address = cleanAddress(input);
+  return geocoder.geocode(address).then(res => res[0])
+}
 
-  geocoder.geocode(address)
-    .then(function(res) {
-      console.log('geocode: ' + address);
-      console.log(res);
-      console.log('-------');
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
-});
+module.exports = main;
 
-// geocoder.geocode({
-//     state: 'Victoria',
-//     postalcode: '3121',
-//     street: '511 Church Street',
-//   })
-//   .then(function(res) {
-//     console.log('geocode object');
-//     console.log(res);
-//     console.log('-------');
-//   })
-//   .catch(function(err) {
-//     console.log(err);
-//   });
-
-// geocoder.reverse({lat:-37.8288688, lon:144.9973862})
-//   .then(function(res) {
-//     console.log('reverse');
-//     console.log(res);
-//     console.log('-------');
-//   })
-//   .catch(function(err) {
-//     console.log(err);
-//   });
-// =>
-// country: 'Australia',
-// city: undefined,
-// state: 'Victoria',
-// zipcode: '3131',
-// streetName: 'Church Street',
-// streetNumber: '527',
-// countryCode: 'AU',
+// DEBUG
+[
+  '511+Church+St%2C+Richmond%2C+VIC+3121',
+  '1%2F511+Church+St%2C+Richmond%2C+VIC+3121'
+]
+  .map(main)
+  .forEach(promise => {
+    promise
+      .then(console.log)
+      .catch(console.error);
+  });
