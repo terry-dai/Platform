@@ -1,5 +1,5 @@
 {
-  "name": "ioGeocoding",
+  "name": "io25Geocoding",
   "description": "geocoding tests",
   "main": "index.js",
   "authors": [

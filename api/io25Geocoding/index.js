@@ -4,8 +4,8 @@
 
   # Sample Usage:
 
-  const ioGeocoding = require('ioGeocoding');
-  ioGeocoding
+  const io25Geocoding = require('io25Geocoding');
+  io25Geocoding
     .then(result => console.log(result))
     .catch(error => console.error(error));
 
