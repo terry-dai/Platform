@@ -10,7 +10,7 @@ function insertFeature(db, pkg, resource, geoJson, feature) {
   const geometryWithFormat = _.assign({}, feature.geometry, { crs: geoJson.crs })
 
   const args = [
-    'dog-walking-zones',
+    'garbage-collection-zones',
     JSON.stringify(geometryWithFormat),
     resource.last_modified,
     JSON.stringify(feature.properties),

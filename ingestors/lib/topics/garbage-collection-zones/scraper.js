@@ -1,8 +1,6 @@
 const gov = require('../../clients/data-dot-gov')
 const request = require('request-promise')
 
-const keywords = ['walk', 'zones', 'off leash']
-
 function isDefinitelyGeoJson(resource) {
   return resource.format.toLowerCase() == 'geojson'
 }
@@ -27,6 +25,7 @@ function selectResourceForPackage(pkg) {
 
 function isUsefulPackage(pkg) {
   const fields = ['name', 'notes', 'title']
+  const keywords = ['collection', 'zones']
 
   return fields.some(field =>
     keywords.some(keyword =>
@@ -43,11 +42,8 @@ function getGeoJson(pair) {
   }))
 }
 
-/*
- * Returns a promise of a list of { package, resource, geoJson }
- */
-function scrape() {
-  return gov.searchPackagesByTags(['dog'])
+exports.scrape = function scrape() {
+  return gov.searchPackagesByTags(['garbage'])
     .then(pkgs => pkgs
       .filter(isUsefulPackage)
       .map(pkg => ({ package: pkg, resource: selectResourceForPackage(pkg) }))
@@ -55,5 +51,3 @@ function scrape() {
       .map(pair => getGeoJson(pair)))
     .then(promises => Promise.all(promises))
 }
-
-exports.scrape = scrape
