@@ -6,46 +6,64 @@
     <link rel="stylesheet" type="text/css" href="bower_components/rui-core/dist/rui-core.css">
     <link rel="stylesheet" type="text/css" href="bower_components/rui-forms/dist/rui-forms-all.css">
     <link rel="stylesheet" type="text/css" href="bower_components/rui-auto-complete/dist/rui-auto-complete-all.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
 
     <title>Address Field</title>
   </head>
   <body>
 
-    <header>
-      <nav>
-        <ul>
-          <li></li>
-        </ul>
-      </nav>
-    </header>
+   <div role="main">
 
-      <form action="index.html">
-        <div class="rui-search-container">
-          <input  name="location"
-            id="consumer-suggest-service"
-            class="rui-input rui-location-box rui-auto-complete-input"
-            data-multi-select="false"
-            data-suggest-types="address"
-            data-location-source="consumer-suggest"
-            data-client-source="rui-index-doc"
-            data-auto-submit="false"
-            placeholder="Street address" />
-          <button class="rui-search-button">
-            <span class="rui-visuallyhidden">Submit Search</span>
-            <span class="rui-icon rui-icon-search"> </span>
+     <div class="search">
+
+        <form action="index.html" class="rui-form">
+
+          <label class="rui-form-element">
+            <span>API URL</span>
+            <input type="text"
+              id="api-url"
+              name="api-url"
+              class="rui-input"
+              placeholder="http://localhost:8080"
+              value="http://localhost:8080"/>
+          </label>
+
+          <label class="rui-form-element">
+            <span>Street Address</span>
+            <input name="location"
+              id="location"
+              class="rui-input rui-location-box rui-auto-complete-input"
+              data-multi-select="false"
+              data-suggest-types="address"
+              data-location-source="consumer-suggest"
+              data-client-source="rui-index-doc"
+              data-auto-submit="false"
+              placeholder="Street Address" />
+          </label>
+
+          <button class="rui-search-button rui-button-brand" id="search-button">
+            <span class="rui-icon rui-icon-search"></span>
+            <span>Submit Search</span>
           </button>
-        </div>
-      </form>
+
+        </form>
+
+      </div>
+
+      <div>
+
+        <textarea name="result-text" id="result-text">Write something here</textarea>
+
+      </div>
 
     </div>
-
-    <footer></footer>
 
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/rui-core/dist/rui-core.js"></script>
     <script src="bower_components/rui-browser-tools/dist/rui-browser-tools-all.js"></script>
     <script src="bower_components/rui-forms/dist/rui-forms-all.js"></script>
     <script src="bower_components/rui-auto-complete/dist/rui-auto-complete-all.js"></script>
+    <script src="index.js"></script>
 
   </body>
 </html>
