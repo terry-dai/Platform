@@ -8,6 +8,19 @@
 
   searchButton.onclick = e => {
     e.preventDefault();
-    result.innerText = `${apiUrl.value}/data/address/${location.value}`;
+
+    const resourceUrl = `${apiUrl.value}/data/address/${location.value}`;
+    fetch(resourceUrl)
+      .then(res => {
+        if (res.ok) return res.json()
+        else throw res
+      })
+      .then(res => {
+        result.innerText = JSON.stringify(res, null, 2);
+      })
+      .catch(err => {
+        console.error(err);
+        result.innerText = `Status: ${err.status}.`;
+      });
   };
 }());
