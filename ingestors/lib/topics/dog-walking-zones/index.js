@@ -4,10 +4,9 @@ const load = require('./loader').load
 
 function run() {
   return scrape().then(transform).then(load).catch(err => {
-    console.log(err)
+    console.log('Failed to ETL dog-walking-zones: ', err)
+    return Promise.reject(err)
   })
 }
-
-run()
 
 exports.run = run
