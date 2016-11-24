@@ -55,7 +55,14 @@ const cleanAddress = input => {
 
 const main = input => {
   const address = cleanAddress(input);
-  return geocoder.geocode(address).then(res => res[0])
+  console.log(`Requesting: "${address}"`);
+  return geocoder.geocode(address)
+    .then(res => {
+      if (!res || res.length === 0) {
+        throw new Error('No coordinates found for ' + address);
+      }
+      return res[0];
+    })
 }
 
 module.exports = main;

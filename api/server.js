@@ -124,11 +124,10 @@ function queryPGContains(type, point, res, next) {
       return console.error('error fetching client from pool', err);
     }
 
-    var sql = 'select * from data';
+    var sql = 'select ST_AsGeoJSON(geometry) as GeoJSON, payload from data';
     if(type)
       sql = sql + ` where type='${type}'`;
-    sql = sql + ' and ST_Contains(ST_SetSRID(geometry, 28355),'
-              + ` ST_Transform(ST_SetSRID(ST_MakePoint(${point}),4326),28355))`
+    sql = sql + ` and ST_Contains(geometry, ST_SetSRID(ST_MakePoint(${point}), 4326))`
               + ' limit 5;'
     console.log('sql query: ' + sql);
 
@@ -141,7 +140,9 @@ function queryPGContains(type, point, res, next) {
       }
       console.log('query returns row count: ' + result.rows.length);
 
-      res.send(result.rows);
+      res.send(result.rows.map(row => {
+        return { "geojson": JSON.parse(row.geojson), "payload": row.payload };
+      }));
       next();
     });
   });
@@ -159,7 +160,11 @@ function getGarbageCollectionZones(address, res, next) {
         var type = 'test-bins';
         queryPGContains(type, point, res, next);
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        console.error(error);
+        res.send(404);
+        next();
+      });
 }
 
 function getDogWalkingZones(address, res, next) {
